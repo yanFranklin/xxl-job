@@ -80,6 +80,7 @@ public class EmbedServer {
                     ChannelFuture future = bootstrap.bind(port).sync();
 
                     logger.info(">>>>>>>>>>> xxl-job remoting server start success, nettype = {}, port = {}", EmbedServer.class, port);
+                    logger.info(">>>>>>>>>>> xxl-job 远程服务器 启动成功, nettype = {}, port = {}", EmbedServer.class, port);
 
                     // start registry
                     startRegistry(appname, address);

@@ -49,7 +49,8 @@ public class JobScheduleHelper {
                         logger.error(e.getMessage(), e);
                     }
                 }
-                logger.info(">>>>>>>>> init xxl-job admin scheduler success.");
+                logger.info(">>>>>>>>> 启动成功 init xxl-job admin scheduler success.");
+//                logger.info("启动成功");
 
                 // pre-read count: treadpool-size * trigger-qps (each trigger cost 50ms, qps = 1000/50 = 20)
                 int preReadCount = (XxlJobAdminConfig.getAdminConfig().getTriggerPoolFastMax() + XxlJobAdminConfig.getAdminConfig().getTriggerPoolSlowMax()) * 20;

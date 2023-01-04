@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * xxl-job config
- *
+ *执行器组件配置
  * @author xuxueli 2017-04-28
  */
 @Configuration
@@ -43,7 +43,8 @@ public class XxlJobConfig {
 
     @Bean
     public XxlJobSpringExecutor xxlJobExecutor() {
-        logger.info(">>>>>>>>>>> xxl-job config init.");
+//        logger.info(">>>>>>>>>>> xxl-job config init.");
+        logger.info(">>>>>>>>>>> 执行器组件配置初始化.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
         xxlJobSpringExecutor.setAppname(appname);

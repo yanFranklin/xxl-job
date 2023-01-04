@@ -154,7 +154,7 @@ public class XxlJobExecutor  {
 
         // accessToken
         if (accessToken==null || accessToken.trim().length()==0) {
-            logger.warn(">>>>>>>>>>> xxl-job accessToken is empty. To ensure system security, please set the accessToken.");
+            logger.warn(">>>>>>>>>>> 安全设置 xxl-job accessToken is empty. To ensure system security, please set the accessToken.");
         }
 
         // start
@@ -180,7 +180,7 @@ public class XxlJobExecutor  {
         return jobHandlerRepository.get(name);
     }
     public static IJobHandler registJobHandler(String name, IJobHandler jobHandler){
-        logger.info(">>>>>>>>>>> xxl-job register jobhandler success, name:{}, jobHandler:{}", name, jobHandler);
+        logger.info(">>>>>>>>>>> jobhandler注册成功 xxl-job register jobhandler success, name:{}, jobHandler:{}", name, jobHandler);
         return jobHandlerRepository.put(name, jobHandler);
     }
     protected void registJobHandler(XxlJob xxlJob, Object bean, Method executeMethod){
