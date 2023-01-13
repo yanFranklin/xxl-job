@@ -3,7 +3,7 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
- * xxl-job info
+ * xxl-job-info 任务管理表 xxl_job_info 保存调度任务的信息
  *
  * @author xuxueli  2016-1-12 18:25:49
  */
@@ -12,7 +12,7 @@ public class XxlJobInfo {
 	private int id;				// 主键ID
 	
 	private int jobGroup;		// 执行器主键ID
-	private String jobDesc;
+	private String jobDesc;     // 调度任务描述信息 description
 	
 	private Date addTime;
 	private Date updateTime;
@@ -20,7 +20,7 @@ public class XxlJobInfo {
 	private String author;		// 负责人
 	private String alarmEmail;	// 报警邮件
 
-	private String scheduleType;			// 调度类型
+	private String scheduleType;			// 调度类型 无/cron/固定速度
 	private String scheduleConf;			// 调度配置，值含义取决于调度类型
 	private String misfireStrategy;			// 调度过期策略
 

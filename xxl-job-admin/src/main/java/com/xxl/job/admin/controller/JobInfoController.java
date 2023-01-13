@@ -97,7 +97,18 @@ public class JobInfoController {
 			throw new RuntimeException(I18nUtil.getString("system_permission_limit") + "[username="+ loginUser.getUsername() +"]");
 		}
 	}
-	
+
+	/**
+	 * 单表查询 调度任务信息
+	 * @param start
+	 * @param length
+	 * @param jobGroup
+	 * @param triggerStatus
+	 * @param jobDesc
+	 * @param executorHandler
+	 * @param author
+	 * @return
+	 */
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,  
@@ -118,7 +129,12 @@ public class JobInfoController {
 	public ReturnT<String> update(XxlJobInfo jobInfo) {
 		return xxlJobService.update(jobInfo);
 	}
-	
+
+	/**
+	 * 根据任务id 删除任务
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/remove")
 	@ResponseBody
 	public ReturnT<String> remove(int id) {

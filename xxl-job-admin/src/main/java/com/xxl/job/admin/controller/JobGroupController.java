@@ -33,11 +33,24 @@ public class JobGroupController {
 	@Resource
 	private XxlJobRegistryDao xxlJobRegistryDao;
 
+	/**
+	 * 模板页面地址
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping
 	public String index(Model model) {
 		return "jobgroup/jobgroup.index";
 	}
 
+	/**
+	 * @param request
+	 * @param start
+	 * @param length
+	 * @param appname
+	 * @param title
+	 * @return 单表查询 注册的执行器信息
+	 */
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Map<String, Object> pageList(HttpServletRequest request,
@@ -57,6 +70,11 @@ public class JobGroupController {
 		return maps;
 	}
 
+	/**
+	 * 新增 执行器信息
+	 * @param xxlJobGroup
+	 * @return
+	 */
 	@RequestMapping("/save")
 	@ResponseBody
 	public ReturnT<String> save(XxlJobGroup xxlJobGroup){
@@ -100,6 +118,11 @@ public class JobGroupController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	/**
+	 * 更新 执行器信息
+	 * @param xxlJobGroup
+	 * @return
+	 */
 	@RequestMapping("/update")
 	@ResponseBody
 	public ReturnT<String> update(XxlJobGroup xxlJobGroup){
@@ -146,8 +169,15 @@ public class JobGroupController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	/**
+	 * 存在疑问
+	 * 根据执行器的名字，查找已经注册的执行器IP地址, 将注册的执行器加入到xxl-job-group分组中
+	 * @param appnameParam
+	 * @return
+	 */
 	private List<String> findRegistryByAppName(String appnameParam){
 		HashMap<String, List<String>> appAddressMap = new HashMap<String, List<String>>();
+		//查找所有没有死亡的注册器（注册更新时间超过60s算作死亡的执行器）
 		List<XxlJobRegistry> list = xxlJobRegistryDao.findAll(RegistryConfig.DEAD_TIMEOUT, new Date());
 		if (list != null) {
 			for (XxlJobRegistry item: list) {
@@ -168,18 +198,25 @@ public class JobGroupController {
 		return appAddressMap.get(appnameParam);
 	}
 
+	/**
+	 * 删除 执行器
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/remove")
 	@ResponseBody
 	public ReturnT<String> remove(int id){
 
-		// valid
+		// valid 查看执行器任务表，查看改该执行器是否在执行任务 （不管该任务的调度状态是运行还是停止）
 		int count = xxlJobInfoDao.pageListCount(0, 10, id, -1,  null, null, null);
 		if (count > 0) {
+			//拒绝删除，该执行器使用中 在XxlJobInfo表中有改执行器在执行任务
 			return new ReturnT<String>(500, I18nUtil.getString("jobgroup_del_limit_0") );
 		}
 
 		List<XxlJobGroup> allList = xxlJobGroupDao.findAll();
 		if (allList.size() == 1) {
+			//拒绝删除, 系统至少保留一个执行器
 			return new ReturnT<String>(500, I18nUtil.getString("jobgroup_del_limit_1") );
 		}
 
@@ -187,6 +224,11 @@ public class JobGroupController {
 		return (ret>0)?ReturnT.SUCCESS:ReturnT.FAIL;
 	}
 
+	/**
+	 * 根据执行器id查询执行器信息
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/loadById")
 	@ResponseBody
 	public ReturnT<XxlJobGroup> loadById(int id){

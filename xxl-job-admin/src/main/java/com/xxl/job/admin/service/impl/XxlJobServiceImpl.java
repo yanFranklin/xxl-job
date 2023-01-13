@@ -62,17 +62,21 @@ public class XxlJobServiceImpl implements XxlJobService {
 
 		// valid base
 		XxlJobGroup group = xxlJobGroupDao.load(jobInfo.getJobGroup());
+		//请选择执行器
 		if (group == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_choose")+I18nUtil.getString("jobinfo_field_jobgroup")) );
 		}
+		//请输入任务描述
 		if (jobInfo.getJobDesc()==null || jobInfo.getJobDesc().trim().length()==0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input")+I18nUtil.getString("jobinfo_field_jobdesc")) );
 		}
+		//请输入任务负责人（作者）
 		if (jobInfo.getAuthor()==null || jobInfo.getAuthor().trim().length()==0) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("system_please_input")+I18nUtil.getString("jobinfo_field_author")) );
 		}
 
 		// valid trigger
+		//调度类型 合法性检查
 		ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(jobInfo.getScheduleType(), null);
 		if (scheduleTypeEnum == null) {
 			return new ReturnT<String>(ReturnT.FAIL_CODE, (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_unvalid")) );

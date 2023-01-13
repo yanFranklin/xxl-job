@@ -3,15 +3,18 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
+ * 执行器注册表，维护在线的执行器和调度中心机器地址信息
  * Created by xuxueli on 16/9/30.
  */
 public class XxlJobRegistry {
 
     private int id;
-    private String registryGroup;
-    private String registryKey;
-    private String registryValue;
-    private Date updateTime;
+    private String registryGroup; //注册器 注册类型 枚举值 { EXECUTOR, ADMIN }
+    private String registryKey; //注册执行器的appname
+    private String registryValue; //执行器注册机器地址
+
+    // 每过30秒客户端执行器会发送一次注册请求，服务端接收到请求也会更新xxl_job_registry表
+    private Date updateTime; //更新时间，自动更新
 
     public int getId() {
         return id;
